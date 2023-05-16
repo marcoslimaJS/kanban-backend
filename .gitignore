@@ -15,4 +15,5 @@
 .DS_Store
 .prettierignore
 .env
+.env.example
 node_modules
