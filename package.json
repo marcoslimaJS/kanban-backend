@@ -3,6 +3,9 @@
   "version": "1.0.0",
   "description": "Api for Kanban App",
   "main": "src/index.js",
+  "engines": {
+    "node": "16.17.1"
+  },
   "scripts": {
     "start": "node src/index.js",
     "build": "npm install",
