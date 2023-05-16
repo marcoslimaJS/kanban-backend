@@ -42,7 +42,9 @@ class UserController {
       username,
       password: passwordHash,
     });
-
+    response
+    .status(200)
+    .json({ msg: `${user.username} user successfully created`, username, password });
     response.send({ msg: `${user.username} user successfully created` });
   }
 

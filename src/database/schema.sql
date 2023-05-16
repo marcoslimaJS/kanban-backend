@@ -11,7 +11,7 @@ CREATE TABLE IF NOT EXISTS users (
 
 CREATE TABLE IF NOT EXISTS boards (
   id UUID NOT NULL UNIQUE DEFAULT uuid_generate_v4(),
-  title VARCHAR NOT NULL,
+  name VARCHAR NOT NULL,
   userId UUID,
   FOREIGN KEY(userId) REFERENCES users(id),
   created_at TIMESTAMP NOT NULL
@@ -19,7 +19,7 @@ CREATE TABLE IF NOT EXISTS boards (
 
 CREATE TABLE IF NOT EXISTS columns (
   id UUID NOT NULL UNIQUE DEFAULT uuid_generate_v4(),
-  title VARCHAR NOT NULL,
+  name VARCHAR NOT NULL,
   description VARCHAR,
   "order" INTEGER NOT NULL,
   boardId UUID,

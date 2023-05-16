@@ -15,7 +15,8 @@ router.get('/user/:userId', UserController.show);
 
 router.use((request, response, next) => {
   const authHeader = request.headers['authorization'];
-  const token = authHeader && authHeader.split(' ')[2];
+  const token = authHeader && authHeader.split(' ')[1];
+  
   if (!token) {
     return response.status(401).json({ error: 'Access denied!' });
   }
