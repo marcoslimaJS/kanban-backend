@@ -1,0 +1,10 @@
+[runtime]
+name = "nodejs"
+
+[build]
+# Comando para instalar as dependências do projeto
+command = "npm run build"
+
+[start]
+# Comando para iniciar o servidor
+command = "npm start"
