@@ -9,7 +9,11 @@ app.use(express.json());
 app.use(cors());
 app.use(routes);
 
-app.listen(5000, () => {
+app.use("/", (req, res) => {
+  console.log("Bem vindo a api do Kanban");
+});
+
+app.listen(3000, '0.0.0.0', () => {
   console.log('Server started at http://localhost:3000');
 });
 
