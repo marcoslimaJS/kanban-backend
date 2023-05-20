@@ -133,6 +133,25 @@ class TaskController {
 
     response.sendStatus(204);
   }
+
+  async updateTaskForColumn(request, response) {
+    const { taskId } = request.params;
+    const { columnId } = request.body;
+
+    const taskExists = await TasksRepository.findTaskById(taskId);
+    const columnExists = await ColumnsRepository.findColumnById(columnId);
+
+    if (!taskExists) {
+      return response.status(404).json({ error: 'Task not found' });
+    }
+     if (!columnExists) {
+      return response.status(400).json({ error: 'Column not found' });
+    }
+
+    await TasksRepository.updateTaskForColumn(taskId, columnId);
+
+    response.send({ msg: 'Task updated successfully' })
+  }
 }
 
 module.exports = new TaskController();

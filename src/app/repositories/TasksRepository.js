@@ -37,6 +37,19 @@ class TasksRepository {
     return row;
   }
 
+  async updateTaskForColumn(taskId, columnId) {
+    const [row] = await db.query(
+      `
+      UPDATE tasks
+      SET columnId = $2
+      WHERE id = $1
+      RETURNING *
+    `,
+      [taskId, columnId]
+    );
+    return row;
+  }
+
   async deleteTask(id) {
     const deleteOp = await db.query('DELETE FROM tasks WHERE id = $1', [id]);
 

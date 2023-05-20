@@ -16,7 +16,7 @@ router.get('/user/:userId', UserController.show);
 router.use((request, response, next) => {
   const authHeader = request.headers['authorization'];
   const token = authHeader && authHeader.split(' ')[1];
-  
+
   if (!token) {
     return response.status(401).json({ error: 'Access denied!' });
   }
@@ -42,6 +42,7 @@ router.get('/task/:columnId', TaskController.index);
 router.post('/task/:columnId', TaskController.store);
 router.put('/task/:taskId', TaskController.update);
 router.delete('/task/:taskId', TaskController.delete);
+router.put('/taskUp/:taskId', TaskController.updateTaskForColumn);
 
 router.get('/boardData/:boardId', BoardController.boardData);
 

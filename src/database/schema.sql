@@ -42,7 +42,7 @@ CREATE TABLE IF NOT EXISTS subtasks (
   title VARCHAR NOT NULL,
   "order" INTEGER NOT NULL,
   completed BOOLEAN NOT NULL,
-  taksId UUID,
-  FOREIGN KEY(taksId) REFERENCES tasks(id),
+  taskId UUID,
+  FOREIGN KEY(taskId) REFERENCES tasks(id),
   created_at TIMESTAMP NOT NULL
 );
