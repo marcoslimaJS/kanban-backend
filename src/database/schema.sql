@@ -6,6 +6,7 @@ CREATE TABLE IF NOT EXISTS users (
   id UUID NOT NULL UNIQUE DEFAULT uuid_generate_v4(),
   username VARCHAR UNIQUE,
   password VARCHAR NOT NULL,
+  simpleLayout BOOLEAN,
   created_at TIMESTAMP NOT NULL
 );
 

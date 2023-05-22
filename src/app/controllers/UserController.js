@@ -8,13 +8,11 @@ class UserController {
     const { userId } = request.params;
     const userIdExists = await UsersRepository.findUserById(userId);
     if (!userIdExists) {
-      return response
-        .status(400)
-        .json({ error: 'User not found' });
+      return response.status(400).json({ error: 'User not found' });
     }
 
     const user = await UsersRepository.findUserById(userId);
-    const {password, ...userData} = user;
+    const { password, id, ...userData } = user;
     response.send(userData);
   }
 
@@ -43,8 +41,12 @@ class UserController {
       password: passwordHash,
     });
     response
-    .status(200)
-    .json({ msg: `${user.username} user successfully created`, username, password });
+      .status(200)
+      .json({
+        msg: `${user.username} user successfully created`,
+        username,
+        password,
+      });
     response.send({ msg: `${user.username} user successfully created` });
   }
 
@@ -72,15 +74,37 @@ class UserController {
     try {
       const secret = process.env.SECRET;
       const token = jwt.sign({ id: user._id }, secret);
+      console.log(user)
 
       response
         .status(200)
-        .json({ msg: 'authentication performed successfully', token, userId: user.id });
+        .json({
+          msg: 'authentication performed successfully',
+          token,
+          userId: user.id,
+          simpleLayout: user.simplelayout,
+        });
     } catch (error) {
       response.status(500).json({
         error: 'There was a server error, please try again later.',
       });
     }
+  }
+
+  async updateBoardLayout(request, response) {
+    const { userId } = request.params;
+    const { simpleLayout } = request.body;
+    const userIdExists = await UsersRepository.findUserById(userId);
+    if (!userIdExists) {
+      return response.status(400).json({ error: 'User not found' });
+    }
+
+    const user = await UsersRepository.updateBoardLayout({
+      id: userId,
+      simpleLayout: simpleLayout,
+    });
+    const { password, id, ...userData } = user;
+    response.send(userData);
   }
 }
 

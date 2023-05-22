@@ -29,6 +29,8 @@ router.use((request, response, next) => {
   }
 });
 
+router.put('/user/:userId', UserController.updateBoardLayout);
+
 router.get('/board/:userId', BoardController.index);
 router.post('/board/:userId', BoardController.store);
 router.put('/board/:boardId', BoardController.update);

@@ -20,6 +20,19 @@ class UsersRepository {
 
     return row;
   }
+
+  async updateBoardLayout({ id, simpleLayout }) {
+    const [row] = await db.query(
+      `
+      UPDATE users
+      SET simpleLayout = $2
+      WHERE id = $1
+      RETURNING *
+    `,
+      [id, simpleLayout]
+    );
+    return row;
+  }
 }
 
 module.exports = new UsersRepository();
