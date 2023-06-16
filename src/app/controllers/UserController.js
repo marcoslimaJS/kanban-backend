@@ -74,7 +74,6 @@ class UserController {
     try {
       const secret = process.env.SECRET;
       const token = jwt.sign({ id: user._id }, secret);
-      console.log(user)
 
       response
         .status(200)
@@ -102,6 +101,22 @@ class UserController {
     const user = await UsersRepository.updateBoardLayout({
       id: userId,
       simpleLayout: simpleLayout,
+    });
+    const { password, id, ...userData } = user;
+    response.send(userData);
+  }
+
+  async updateLayoutNotification(request, response) {
+    const { userId } = request.params;
+    const { show } = request.body;
+    const userIdExists = await UsersRepository.findUserById(userId);
+    if (!userIdExists) {
+      return response.status(400).json({ error: 'User not found' });
+    }
+
+    const user = await UsersRepository.updateLayoutNotification({
+      id: userId,
+      show,
     });
     const { password, id, ...userData } = user;
     response.send(userData);

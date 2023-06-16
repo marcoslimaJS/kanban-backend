@@ -9,10 +9,12 @@ const TaskController = require('./app/controllers/TaskController');
 
 const router = Router();
 
+// User Before Login
 router.post('/register', UserController.store);
 router.post('/login', UserController.login);
 router.get('/user/:userId', UserController.show);
 
+// Valid Token
 router.use((request, response, next) => {
   const authHeader = request.headers['authorization'];
   const token = authHeader && authHeader.split(' ')[1];
@@ -29,23 +31,27 @@ router.use((request, response, next) => {
   }
 });
 
+// User After Login
 router.put('/user/:userId', UserController.updateBoardLayout);
+router.put('/user/:userId', UserController.updateLayoutNotification);
 
+// Board
 router.get('/board/:userId', BoardController.index);
 router.post('/board/:userId', BoardController.store);
 router.put('/board/:boardId', BoardController.update);
 router.delete('/board/:boardId', BoardController.delete);
 
+router.get('/boardData/:boardId', BoardController.boardData);
+
+// Column
 router.get('/column/:boardId', ColumnController.index);
 router.post('/column/:boardId', ColumnController.store);
-//router.put('/column/:columnId', ColumnController.update);
 
+// Task
 router.get('/task/:columnId', TaskController.index);
 router.post('/task/:columnId', TaskController.store);
 router.put('/task/:taskId', TaskController.update);
 router.delete('/task/:taskId', TaskController.delete);
 router.put('/taskUp/:taskId', TaskController.updateTaskForColumn);
-
-router.get('/boardData/:boardId', BoardController.boardData);
 
 module.exports = router;

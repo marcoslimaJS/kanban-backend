@@ -33,6 +33,20 @@ class UsersRepository {
     );
     return row;
   }
+
+  async updateLayoutNotification({ id, show }) {
+    const [row] = await db.query(
+      `
+      UPDATE users
+      SET new_layout_notification = $2
+      WHERE id = $1
+      RETURNING *
+    `,
+      [id, show]
+    );
+    return row;
+  }
+
 }
 
 module.exports = new UsersRepository();

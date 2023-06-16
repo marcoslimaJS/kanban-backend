@@ -86,7 +86,6 @@ class TaskController {
     // Remove a coluna caso ela exista no banco e não exista na requisição
     // pois isso quer dizer que o usuario removeu a coluna.
     for (const [i, { id }] of allSubtaskOfTask.entries()) {
-      console.log(subtasksId.includes(id));
       !subtasksId.includes(id) && (await SubtasksRepository.deleteSubtask(id));
     }
 
