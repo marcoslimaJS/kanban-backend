@@ -21,28 +21,15 @@ class UsersRepository {
     return row;
   }
 
-  async updateBoardLayout({ id, simpleLayout }) {
+  async updateUserData(id, { simpleLayout, showNotification }) {
     const [row] = await db.query(
       `
       UPDATE users
-      SET simpleLayout = $2
+      SET simple_layout = $2, new_layout_notification = $3
       WHERE id = $1
       RETURNING *
     `,
-      [id, simpleLayout]
-    );
-    return row;
-  }
-
-  async updateLayoutNotification({ id, show }) {
-    const [row] = await db.query(
-      `
-      UPDATE users
-      SET new_layout_notification = $2
-      WHERE id = $1
-      RETURNING *
-    `,
-      [id, show]
+      [id, simpleLayout, showNotification]
     );
     return row;
   }

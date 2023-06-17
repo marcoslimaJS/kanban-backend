@@ -12,7 +12,6 @@ const router = Router();
 // User Before Login
 router.post('/register', UserController.store);
 router.post('/login', UserController.login);
-router.get('/user/:userId', UserController.show);
 
 // Valid Token
 router.use((request, response, next) => {
@@ -32,8 +31,8 @@ router.use((request, response, next) => {
 });
 
 // User After Login
-router.put('/user/:userId', UserController.updateBoardLayout);
-router.put('/user/:userId', UserController.updateLayoutNotification);
+router.get('/user/:userId', UserController.getUserData);
+router.put('/user/:userId', UserController.updateUserData);
 
 // Board
 router.get('/board/:userId', BoardController.index);
@@ -41,7 +40,7 @@ router.post('/board/:userId', BoardController.store);
 router.put('/board/:boardId', BoardController.update);
 router.delete('/board/:boardId', BoardController.delete);
 
-router.get('/boardData/:boardId', BoardController.boardData);
+router.get('/boardData/:boardId', BoardController.getBoardData);
 
 // Column
 router.get('/column/:boardId', ColumnController.index);

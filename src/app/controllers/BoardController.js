@@ -125,7 +125,7 @@ class BoardController {
     response.sendStatus(204);
   }
 
-  async boardData(request, response) {
+  async getBoardData(request, response) {
     const { boardId } = request.params;
     const boardExists = await BoardsRepository.findBoardById(boardId);
 

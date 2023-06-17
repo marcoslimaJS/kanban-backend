@@ -4,7 +4,7 @@ require('dotenv').config();
 const UsersRepository = require('../repositories/UsersRepository');
 
 class UserController {
-  async show(request, response) {
+  async getUserData(request, response) {
     const { userId } = request.params;
     const userIdExists = await UsersRepository.findUserById(userId);
     if (!userIdExists) {
@@ -40,13 +40,11 @@ class UserController {
       username,
       password: passwordHash,
     });
-    response
-      .status(200)
-      .json({
-        msg: `${user.username} user successfully created`,
-        username,
-        password,
-      });
+    response.status(200).json({
+      msg: `${user.username} user successfully created`,
+      username,
+      password,
+    });
     response.send({ msg: `${user.username} user successfully created` });
   }
 
@@ -74,15 +72,13 @@ class UserController {
     try {
       const secret = process.env.SECRET;
       const token = jwt.sign({ id: user._id }, secret);
-
-      response
-        .status(200)
-        .json({
-          msg: 'authentication performed successfully',
-          token,
-          userId: user.id,
-          simpleLayout: user.simplelayout,
-        });
+      const { password, id, ...userData } = user;
+      response.status(200).json({
+        msg: 'authentication performed successfully',
+        token,
+        userId: user.id,
+        simpleLayout: user.simple_layout,
+      });
     } catch (error) {
       response.status(500).json({
         error: 'There was a server error, please try again later.',
@@ -90,33 +86,17 @@ class UserController {
     }
   }
 
-  async updateBoardLayout(request, response) {
+  async updateUserData(request, response) {
     const { userId } = request.params;
-    const { simpleLayout } = request.body;
+    const { simpleLayout, showNotification } = request.body;
     const userIdExists = await UsersRepository.findUserById(userId);
     if (!userIdExists) {
       return response.status(400).json({ error: 'User not found' });
     }
 
-    const user = await UsersRepository.updateBoardLayout({
-      id: userId,
-      simpleLayout: simpleLayout,
-    });
-    const { password, id, ...userData } = user;
-    response.send(userData);
-  }
-
-  async updateLayoutNotification(request, response) {
-    const { userId } = request.params;
-    const { show } = request.body;
-    const userIdExists = await UsersRepository.findUserById(userId);
-    if (!userIdExists) {
-      return response.status(400).json({ error: 'User not found' });
-    }
-
-    const user = await UsersRepository.updateLayoutNotification({
-      id: userId,
-      show,
+    const user = await UsersRepository.updateUserData(userId, {
+      simpleLayout,
+      showNotification,
     });
     const { password, id, ...userData } = user;
     response.send(userData);
