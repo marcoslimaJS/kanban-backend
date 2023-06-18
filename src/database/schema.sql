@@ -7,7 +7,7 @@ CREATE TABLE IF NOT EXISTS users (
   username VARCHAR UNIQUE,
   password VARCHAR NOT NULL,
   simple_layout BOOLEAN DEFAULT false,
-  new_layout_notification BOOLEAN true,
+  new_layout_notification BOOLEAN DEFAULT true,
   created_at TIMESTAMP NOT NULL
 );
 

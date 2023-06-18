@@ -40,12 +40,14 @@ class UserController {
       username,
       password: passwordHash,
     });
+
+    const { id, ...userData } = user;
+
     response.status(200).json({
       msg: `${user.username} user successfully created`,
-      username,
+      ...userData,
       password,
     });
-    response.send({ msg: `${user.username} user successfully created` });
   }
 
   async login(request, response) {
@@ -78,6 +80,7 @@ class UserController {
         token,
         userId: user.id,
         simpleLayout: user.simple_layout,
+        new_layout_notification: user.new_layout_notification
       });
     } catch (error) {
       response.status(500).json({
