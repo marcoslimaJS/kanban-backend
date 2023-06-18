@@ -47,6 +47,7 @@ class UserController {
       msg: `${user.username} user successfully created`,
       ...userData,
       password,
+      username
     });
   }
 
@@ -79,8 +80,7 @@ class UserController {
         msg: 'authentication performed successfully',
         token,
         userId: user.id,
-        simpleLayout: user.simple_layout,
-        new_layout_notification: user.new_layout_notification
+        ...userData
       });
     } catch (error) {
       response.status(500).json({
